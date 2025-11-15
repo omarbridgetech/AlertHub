@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.mst</groupId>
-    <artifactId>Loader-Ms</artifactId>
+    <artifactId>Loader microservice for Alert Hub project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Loader-Ms</name>
     <description>Loader-Ms</description>
