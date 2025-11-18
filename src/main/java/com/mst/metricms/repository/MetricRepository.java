@@ -66,5 +66,7 @@ public interface MetricRepository extends JpaRepository<Metric, UUID> {
     @Query("SELECT m FROM Metric m WHERE m.timeFrameHours BETWEEN :minHours AND :maxHours")
     List<Metric> findByTimeFrameRange(@Param("minHours") Integer minHours,
                                       @Param("maxHours") Integer maxHours);
+
+    Metric save(Optional<Metric> existingMetric);
 }
 

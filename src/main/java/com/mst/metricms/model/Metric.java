@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Metric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 

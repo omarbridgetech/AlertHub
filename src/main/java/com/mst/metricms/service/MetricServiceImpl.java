@@ -2,8 +2,8 @@ package com.mst.metricms.service;
 
 import com.mst.metricms.dto.MetricRequestDTO;
 import com.mst.metricms.dto.MetricResponseDTO;
-import com.mst.metricms.exception.DuplicateMetricException;
-import com.mst.metricms.exception.MetricNotFoundException;
+//import com.mst.metricms.exception.DuplicateMetricException;
+//import com.mst.metricms.exception.MetricNotFoundException;
 import com.mst.metricms.model.Label;
 import com.mst.metricms.model.Metric;
 import com.mst.metricms.repository.MetricRepository;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,7 @@ public class MetricServiceImpl implements MetricService {
         // Check if metric name already exists
         if (metricRepository.existsByName(request.getName())) {
             log.error("Metric with name '{}' already exists", request.getName());
-            throw new DuplicateMetricException(request.getName(), true);
+            throw new RuntimeException(request.getName());
         }
 
         // Create metric entity
@@ -63,31 +64,9 @@ public class MetricServiceImpl implements MetricService {
         log.info("Updating metric with ID: {}", id);
 
         // Find existing metric
-        Metric existingMetric = metricRepository.findById(id)
-                .orElseThrow(() -> {
-                    log.error("Metric not found with ID: {}", id);
-                    return new MetricNotFoundException(id);
-                });
+        Optional<Metric> existingMetric = metricRepository.findById(id);
+        return null;
 
-        // Check if new name conflicts with another metric
-        if (!existingMetric.getName().equals(request.getName()) &&
-                metricRepository.existsByName(request.getName())) {
-            log.error("Metric with name '{}' already exists", request.getName());
-            throw new DuplicateMetricException(request.getName(), true);
-        }
-
-        // Update fields
-        existingMetric.setUserId(request.getUserId());
-        existingMetric.setName(request.getName());
-        existingMetric.setLabel(request.getLabel());
-        existingMetric.setThreshold(request.getThreshold());
-        existingMetric.setTimeFrameHours(request.getTimeFrameHours());
-
-        // Save updated metric
-        Metric updatedMetric = metricRepository.save(existingMetric);
-        log.info("Metric updated successfully with ID: {}", updatedMetric.getId());
-
-        return MetricResponseDTO.fromEntity(updatedMetric);
     }
 
     @Override
@@ -97,7 +76,7 @@ public class MetricServiceImpl implements MetricService {
         // Check if metric exists
         if (!metricRepository.existsById(id)) {
             log.error("Metric not found with ID: {}", id);
-            throw new MetricNotFoundException(id);
+            throw new RuntimeException();
         }
 
         metricRepository.deleteById(id);
@@ -109,13 +88,10 @@ public class MetricServiceImpl implements MetricService {
     public MetricResponseDTO getMetricById(UUID id) {
         log.info("Fetching metric with ID: {}", id);
 
-        Metric metric = metricRepository.findById(id)
-                .orElseThrow(() -> {
-                    log.error("Metric not found with ID: {}", id);
-                    return new MetricNotFoundException(id);
-                });
+        Optional<Metric> metric = metricRepository.findById(id);
 
-        return MetricResponseDTO.fromEntity(metric);
+
+        return null;
     }
 
     @Override

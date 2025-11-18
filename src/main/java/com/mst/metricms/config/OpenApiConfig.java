@@ -1,6 +1,7 @@
 package com.mst.metricms.config;
 
-import io.swagger.v3.oas.annotations.info.License;
+//import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -16,27 +17,27 @@ import java.util.List;
  * Provides interactive API documentation.
  */
 @Configuration
-public class SwaggerConfig {
+public class OpenApiConfig {
 
     @Value("${openapi.dev-url}")
     private String devUrl;
 
-
     @Bean
-    public OpenAPI myOpenAPI(){
+    public OpenAPI myOpenAPI() {
         Server server = new Server();
         server.setUrl(devUrl);
-        server.setDescription("OpenAPI Documentation for Metrics microservice");
+        server.setDescription("Alert-Hub UTRL for development ENV ");
+
         Contact contact = new Contact();
         contact.setEmail("omar99awaisha@gmail.com");
         contact.setName("omar");
-        contact.setUrl("http://www.omar.com");
-        //Li mitLicense= new License().name("MIT License").url("https://chooselicense.com/licenses/mit/");
-        Info info = new Info().title("Metrics Microservice").version("1.0").contact(contact).
-                description("Metrics Microservice").termsOfService("http://www.omar.com/terms");
+        contact.setUrl("http://www.omarAwaish.com");
+        License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 
+        Info info=  new Info().title("Metrics microservice API").version("1.0").contact(contact)
+                .description("This API exposes endpoints to manage books.").termsOfService("https://www.Kabhad82.com/terms")
+                .license(mitLicense);
         return new OpenAPI().info(info).servers(List.of(server));
-
     }
 
 
