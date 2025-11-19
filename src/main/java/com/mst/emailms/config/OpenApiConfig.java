@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
-import java.util.List;
 
+@Configuration
 public class OpenApiConfig {
 
     @Value("${openapi.dev-url}")
@@ -29,8 +29,8 @@ public class OpenApiConfig {
         contact.setUrl("http://www.omarAwaish.com");
         License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 
-        Info info=  new Info().title("Metrics microservice API").version("1.0").contact(contact)
-                .description("This API exposes endpoints to manage books.").termsOfService("https://www.Kabhad82.com/terms")
+        Info info=  new Info().title("Email Notification Microservice API").version("1.0").contact(contact)
+                .description("This API exposes endpoints to send email notifications for the Alert Hub system.").termsOfService("https://www.Kabhad82.com/terms")
                 .license(mitLicense);
         return new OpenAPI().info(info).servers(List.of(server));
     }
