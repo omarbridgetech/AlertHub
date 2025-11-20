@@ -14,10 +14,13 @@ spec:
     spec:
       containers:
         - name: loader-app
-          image: omar99awaisha/loader-services:v1.0
+          image: omar99awaisha/loader-services:v1.1
           ports:
             - containerPort: 8081
           env:
+            # Direct database URL override with allowPublicKeyRetrieval=true
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://loaderdbcntr:3306/loaderMsDb?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true"
             - name: DB_HOST
               value: loaderdbcntr
             - name: DB_USER
@@ -37,8 +40,10 @@ kind: Service
 metadata:
   name: loader-app
 spec:
+  type: NodePort
   selector:
-    app:  loader-app
+    app: loader-app
   ports:
-    - port: 81
+    - port: 8081
       targetPort: 8081
+      nodePort: 30081
