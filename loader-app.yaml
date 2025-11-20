@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loader-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: loader-app
+  template:
+    metadata:
+      labels:
+        app: loader-app
+    spec:
+      containers:
+        - name: loader-app
+          image: omar99awaisha/loader-services:v1.0
+          ports:
+            - containerPort: 8081
+          env:
+            - name: DB_HOST
+              value: loaderdbcntr
+            - name: DB_USER
+              value: root
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-password
+            - name: DB_NAME
+              value: loaderMsDb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loader-app
+spec:
+  selector:
+    app:  loader-app
+  ports:
+    - port: 81
+      targetPort: 8081

@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+data:
+  mysql-password: MTIzNA==
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loaderdbcntr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loaderdbcntr
+  template:
+    metadata:
+      labels:
+        app: loaderdbcntr
+    spec:
+      containers:
+        - name: loaderdbcntr
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-password
+            - name: MYSQL_DATABASE
+              value: loaderMsDb
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loaderdbcntr
+spec:
+  selector:
+    app: loaderdbcntr
+  ports:
+    - port: 3306
