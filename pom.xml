@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.mst</groupId>
-    <artifactId>Loader microservice for Alert Hub project</artifactId>
+    <artifactId>Loader-Ms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Loader-Ms</name>
-    <description>Loader-Ms</description>
+    <description>Loader microservice for Alert Hub project</description>
     <url/>
     <licenses>
         <license/>
@@ -78,6 +78,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.0.3</version>
         </dependency>
     </dependencies>
 

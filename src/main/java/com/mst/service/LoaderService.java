@@ -6,11 +6,11 @@ import java.util.Map;
 
 public interface LoaderService {
 
-    int scanAndLoadProvider(Provider provider);
+    int scanAndLoadProvider(Provider provider) throws Exception;
 
     Map<Provider, Integer> scanAndLoadAllProviders();
 
-    int triggerManualScan(Provider provider);
+    int triggerManualScan(Provider provider) throws Exception;
 
     Map<Provider, Integer> triggerManualScanAll();
 }

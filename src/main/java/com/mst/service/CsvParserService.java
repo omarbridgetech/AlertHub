@@ -1,6 +1,5 @@
 package com.mst.service;
 
-import com.mst.exception.FileParseException;
 import com.mst.model.PlatformInformation;
 import com.mst.model.Provider;
 import org.slf4j.Logger;
@@ -20,7 +19,7 @@ public class CsvParserService {
 
     private static final Logger log = LoggerFactory.getLogger(CsvParserService.class);
 
-    public List<PlatformInformation> parseGitHubCsv(String csvContent, LocalDateTime scanTime) {
+    public List<PlatformInformation> parseGitHubCsv(String csvContent, LocalDateTime scanTime) throws Exception {
         log.info("Parsing GitHub CSV content");
         try {
             List<Map<String, String>> rows = parseCsv(csvContent);
@@ -48,11 +47,11 @@ public class CsvParserService {
             return result;
         } catch (Exception e) {
             log.error("Error parsing GitHub CSV", e);
-            throw new FileParseException("Failed to parse GitHub CSV", e);
+            throw new Exception("Failed to parse GitHub CSV", e);
         }
     }
 
-    public List<PlatformInformation> parseJiraCsv(String csvContent, LocalDateTime scanTime) {
+    public List<PlatformInformation> parseJiraCsv(String csvContent, LocalDateTime scanTime) throws Exception {
         log.info("Parsing Jira CSV content");
         try {
             List<Map<String, String>> rows = parseCsv(csvContent);
@@ -80,11 +79,11 @@ public class CsvParserService {
             return result;
         } catch (Exception e) {
             log.error("Error parsing Jira CSV", e);
-            throw new FileParseException("Failed to parse Jira CSV", e);
+            throw new Exception("Failed to parse Jira CSV", e);
         }
     }
 
-    public List<PlatformInformation> parseClickUpCsv(String csvContent, LocalDateTime scanTime) {
+    public List<PlatformInformation> parseClickUpCsv(String csvContent, LocalDateTime scanTime) throws Exception {
         log.info("Parsing ClickUp CSV content");
         try {
             List<Map<String, String>> rows = parseCsv(csvContent);
@@ -112,17 +111,17 @@ public class CsvParserService {
             return result;
         } catch (Exception e) {
             log.error("Error parsing ClickUp CSV", e);
-            throw new FileParseException("Failed to parse ClickUp CSV", e);
+            throw new Exception("Failed to parse ClickUp CSV", e);
         }
     }
 
-    private List<Map<String, String>> parseCsv(String csvContent) {
+    private List<Map<String, String>> parseCsv(String csvContent) throws Exception {
         List<Map<String, String>> result = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new StringReader(csvContent))) {
             String headerLine = reader.readLine();
             if (headerLine == null) {
-                throw new FileParseException("CSV file is empty");
+                throw new Exception("CSV file is empty");
             }
 
             String[] headers = parseCsvLine(headerLine);
@@ -153,7 +152,7 @@ public class CsvParserService {
 
             log.debug("Parsed {} data rows from CSV", result.size());
         } catch (Exception e) {
-            throw new FileParseException("Error parsing CSV content", e);
+            throw new Exception("Error parsing CSV content", e);
         }
 
         return result;

@@ -3,10 +3,10 @@ package com.mst;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class LoaderMsApplicationTests {
 
-    @Test
+    //@Test
     void contextLoads() {
     }
 

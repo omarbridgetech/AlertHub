@@ -2,6 +2,13 @@ package com.mst.controller;
 
 import com.mst.model.Provider;
 import com.mst.service.LoaderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +22,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/loader")
+@Tag(
+        name = "Loader Controller",
+        description = "Endpoints for triggering manual scans and loading data from GitHub repositories (GitHub, Jira, ClickUp)"
+)
 public class LoaderController {
 
     private static final Logger log = LoggerFactory.getLogger(LoaderController.class);
@@ -26,6 +37,13 @@ public class LoaderController {
     }
 
     @PostMapping("/scan/manual")
+    @Operation(
+            summary = "Trigger manual scan for all providers",
+            description = "Manually triggers a scan and load operation for all providers (GitHub, Jira, and ClickUp). " +
+                    "This endpoint fetches new CSV files from the GitHub repository, parses them, and stores the data " +
+                    "in the platform_information table. Files that have already been successfully scanned are skipped.",
+            tags = {"Loader Controller"}
+    )
     public ResponseEntity<Map<String, Object>> triggerManualScanAll() {
         log.info("Manual scan triggered for all providers");
 
@@ -55,6 +73,14 @@ public class LoaderController {
     }
 
     @PostMapping("/scan/manual/{provider}")
+    @Operation(
+            summary = "Trigger manual scan for a specific provider",
+            description = "Manually triggers a scan and load operation for a single provider (github, jira, or clickup). " +
+                    "This endpoint fetches new CSV files for the specified provider from the GitHub repository, " +
+                    "parses them, and stores the data in the platform_information table. " +
+                    "Files that have already been successfully scanned are skipped.",
+            tags = {"Loader Controller"}
+    )
     public ResponseEntity<Map<String, Object>> triggerManualScanProvider(@PathVariable String provider) {
         log.info("Manual scan triggered for provider: {}", provider);
 
@@ -93,6 +119,12 @@ public class LoaderController {
     }
 
     @GetMapping("/status")
+    @Operation(
+            summary = "Get loader service status",
+            description = "Returns the current status of the Loader service along with supported providers and timestamp. " +
+                    "This endpoint can be used for health monitoring and service discovery.",
+            tags = {"Loader Controller"}
+    )
     public ResponseEntity<Map<String, Object>> getStatus() {
         Map<String, Object> status = new HashMap<>();
         status.put("service", "Loader Service");
@@ -104,6 +136,12 @@ public class LoaderController {
     }
 
     @GetMapping("/health")
+    @Operation(
+            summary = "Health check endpoint",
+            description = "Simple health check endpoint that returns the service status and current timestamp. " +
+                    "Used for Kubernetes liveness/readiness probes and monitoring systems.",
+            tags = {"Loader Controller"}
+    )
     public ResponseEntity<Map<String, String>> healthCheck() {
         Map<String, String> health = new HashMap<>();
         health.put("status", "UP");

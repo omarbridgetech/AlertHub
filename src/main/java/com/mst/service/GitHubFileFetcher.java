@@ -1,6 +1,5 @@
 package com.mst.service;
 
-import com.mst.exception.FileReadException;
 import com.mst.model.Provider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +46,7 @@ public class GitHubFileFetcher {
         };
     }
 
-    public List<GitHubFileInfo> listFilesInBranch(Provider provider) {
+    public List<GitHubFileInfo> listFilesInBranch(Provider provider) throws Exception {
         String path = getPathForProvider(provider);
         String url = String.format(
                 "https://api.github.com/repos/%s/%s/contents/%s?ref=main",
@@ -100,11 +99,11 @@ public class GitHubFileFetcher {
 
         } catch (Exception e) {
             log.error("Error fetching file list from GitHub", e);
-            throw new FileReadException("Failed to fetch file list from GitHub: " + e.getMessage(), e);
+            throw new Exception("Failed to fetch file list from GitHub: " + e.getMessage(), e);
         }
     }
 
-    public String downloadFileContent(String downloadUrl) {
+    public String downloadFileContent(String downloadUrl) throws Exception {
         log.info("Downloading file from: {}", downloadUrl);
 
         try {
@@ -123,7 +122,7 @@ public class GitHubFileFetcher {
 
             String content = response.getBody();
             if (content == null || content.isEmpty()) {
-                throw new FileReadException("Downloaded file is empty");
+                throw new Exception("Downloaded file is empty");
             }
 
             log.info("Successfully downloaded file, size: {} bytes", content.length());
@@ -131,11 +130,11 @@ public class GitHubFileFetcher {
 
         } catch (Exception e) {
             log.error("Error downloading file from GitHub", e);
-            throw new FileReadException("Failed to download file: " + e.getMessage(), e);
+            throw new Exception("Failed to download file: " + e.getMessage(), e);
         }
     }
 
-    public List<GitHubFileInfo> getUnscannedFiles(Provider provider, List<String> scannedFileNames) {
+    public List<GitHubFileInfo> getUnscannedFiles(Provider provider, List<String> scannedFileNames) throws Exception {
         List<GitHubFileInfo> allFiles = listFilesInBranch(provider);
 
         List<GitHubFileInfo> unscannedFiles = allFiles.stream()

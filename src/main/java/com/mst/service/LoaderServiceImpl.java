@@ -36,7 +36,7 @@ public class LoaderServiceImpl implements LoaderService {
 
     @Override
     @Transactional
-    public int scanAndLoadProvider(Provider provider) {
+    public int scanAndLoadProvider(Provider provider) throws Exception {
         log.info("Starting scan for provider: {}", provider);
 
         try {
@@ -94,7 +94,7 @@ public class LoaderServiceImpl implements LoaderService {
 
     @Override
     @Transactional
-    public int triggerManualScan(Provider provider) {
+    public int triggerManualScan(Provider provider) throws Exception {
         log.info("Manual scan triggered for provider: {}", provider);
         return scanAndLoadProvider(provider);
     }
@@ -107,7 +107,7 @@ public class LoaderServiceImpl implements LoaderService {
     }
 
     @Transactional
-    protected int processGitHubFile(GitHubFileFetcher.GitHubFileInfo fileInfo) {
+    protected int processGitHubFile(GitHubFileFetcher.GitHubFileInfo fileInfo) throws Exception {
         String fileName = fileInfo.fileName();
         Provider provider = fileInfo.provider();
         LocalDateTime scanTime = LocalDateTime.now();
@@ -156,7 +156,7 @@ public class LoaderServiceImpl implements LoaderService {
     }
 
     private List<PlatformInformation> parseCsvData(String csvContent, Provider provider,
-                                                   LocalDateTime scanTime) {
+                                                   LocalDateTime scanTime) throws Exception {
         return switch (provider) {
             case GITHUB -> csvParserService.parseGitHubCsv(csvContent, scanTime);
             case JIRA -> csvParserService.parseJiraCsv(csvContent, scanTime);
