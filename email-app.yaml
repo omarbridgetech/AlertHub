@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: email-app
-          image: omar99awaisha/email-services:v1.0
+          image: omar99awaisha/email-services:v1.1
           ports:
             - containerPort: 8084
           env:
