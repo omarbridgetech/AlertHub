@@ -12,7 +12,7 @@ public class ConsumerService {
     @Autowired
     private EmailService emailService;
 
-    @KafkaListener(topics = "emailTopic", groupId = "omar's")
+    @KafkaListener(topics = "emailTopic", groupId = "email-consumer-group")
     public void consumeMessage(String message) {
 
         String[] part = message.split(",", 2);
