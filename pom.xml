@@ -112,6 +112,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>SmsMs</finalName>
     </build>
 
 </project>
