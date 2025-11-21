@@ -99,6 +99,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>MetricsMs</finalName>
     </build>
 
 </project>
