@@ -5,7 +5,7 @@ metadata:
 type: Opaque
 data:
 
-  smtp-username: eW91ci1lbWFpbEBnbWFpbC5jb20=
+  smtp-username: b21hcjk5YXdhaXNoYUBnbWFpbC5jb20=
   smtp-password: a3JudCBhZ2RpIG12ZHcgY3Z6eA==
 ---
 apiVersion: apps/v1
@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: email-app
-          image: omar99awaisha/email-services:v1.4
+          image: omar99awaisha/email-services:v1.5
           ports:
             - containerPort: 8084
           env:
