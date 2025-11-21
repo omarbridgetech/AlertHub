@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: metrics-app
-          image: omar99awaisha/metric-services:v1.1
+          image: omar99awaisha/metric-services:v1.2
           ports:
             - containerPort: 8081
           env:
