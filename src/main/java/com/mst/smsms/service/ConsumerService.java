@@ -10,7 +10,7 @@ public class ConsumerService {
     @Autowired
     private SmsService smsService;
 
-    @KafkaListener(topics = "smsTopic", groupId = "omar's")
+    @KafkaListener(topics = "sms", groupId = "sms-consumer-group")
     public void consumeMessage(String message) {
 
         String[] part = message.split(",", 2);
