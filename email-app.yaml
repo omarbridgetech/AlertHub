@@ -24,13 +24,17 @@ spec:
     spec:
       containers:
         - name: email-app
-          image: omar99awaisha/email-services:v1.5
+          image: omar99awaisha/email-services:v1.6
           ports:
             - containerPort: 8084
           env:
             # Kafka Configuration
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: "kafka-service:9092"
+
+            # Logger Service Configuration
+            - name: LOGGER_SERVICE_URL
+              value: "http://logger-app:8086"
 
             # SMTP Configuration
             - name: SMTP_HOST
