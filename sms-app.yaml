@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: sms-app
-          image: omar99awaisha/sms-services:v1.0
+          image: omar99awaisha/sms-services:v1.1
           ports:
             - containerPort: 8085
           env:
@@ -37,6 +37,8 @@ spec:
                 secretKeyRef:
                   name: sms-secret
                   key: twilio-phone-number
+            - name: LOGGER_SERVICE_URL
+              value: "http://logger-app:8086"
 ---
 apiVersion: v1
 kind: Service
