@@ -6,6 +6,14 @@ type: Opaque
 data:
   mysql-password: MTIzNA==
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: security-jwt-secret
+type: Opaque
+data:
+  jwt-secret: dUMzcFdiN1o5aFI0cVk4bkwydFY2bUQxZUY5clQzeUg1dU44cFI0c1Y2d1gyYko3blE5a0w1Zk0xYUMzZEU4Zw==
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

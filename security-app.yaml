@@ -1,11 +1,3 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: security-jwt-secret
-type: Opaque
-data:
-  jwt-secret: dUMzcFdiN1o5aFI0cVk4bkwydFY2bUQxZUY5clQzeUg1dU44cFI0c1Y2d1gyYko3blE5a0w1Zk0xYUMzZEU4Zw==
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,13 +14,10 @@ spec:
     spec:
       containers:
         - name: security-app
-          image: omar99awaisha/security-service:v1.3
+          image: omar99awaisha/security-service:v1.4
           ports:
             - containerPort: 8083
           env:
-            # Direct database URL override
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:mysql://securitydbcntr:3306/security_db?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true"
             - name: DB_HOST
               value: securitydbcntr
             - name: DB_USER
@@ -42,29 +31,11 @@ spec:
                   key: mysql-password
             - name: DB_NAME
               value: security_db
-            # Server port configuration
-            - name: SERVER_PORT
-              value: "8083"
-            # JWT Configuration
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: security-jwt-secret
                   key: jwt-secret
-            - name: JWT_EXPIRATION_MS
-              value: "86400000"
-            # Admin Configuration
-            - name: APP_ADMIN_USERNAME
-              value: "admin"
-            - name: APP_ADMIN_EMAIL
-              value: "admin@local"
-            - name: APP_ADMIN_PASSWORD
-              value: "Admin@123"
-            - name: APP_ADMIN_PHONE
-              value: "0509999999"
-            # Logger Service URL
-            - name: LOGGER_SERVICE_URL
-              value: "http://logger-app:8080"
 ---
 apiVersion: v1
 kind: Service
