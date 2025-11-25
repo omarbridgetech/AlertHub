@@ -137,7 +137,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>EmailMs</finalName>
+		<finalName>Sec</finalName>
 
 		
 	</build>
