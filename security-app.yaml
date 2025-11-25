@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: security-app
-          image: omar99awaisha/security-service:v1.2
+          image: omar99awaisha/security-service:v1.3
           ports:
             - containerPort: 8083
           env:
@@ -57,9 +57,9 @@ spec:
             - name: APP_ADMIN_USERNAME
               value: "admin"
             - name: APP_ADMIN_EMAIL
-              value: "admin@gmail.com"
+              value: "admin@local"
             - name: APP_ADMIN_PASSWORD
-              value: "admin1234"
+              value: "Admin@123"
             - name: APP_ADMIN_PHONE
               value: "0509999999"
             # Logger Service URL
