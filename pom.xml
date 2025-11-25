@@ -137,6 +137,9 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>EmailMs</finalName>
+
+		
 	</build>
 
 </project>
