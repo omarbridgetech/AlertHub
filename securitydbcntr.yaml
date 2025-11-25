@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: security-mysql-secret
+type: Opaque
+data:
+  mysql-password: MTIzNA==
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: securitydbcntr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: securitydbcntr
+  template:
+    metadata:
+      labels:
+        app: securitydbcntr
+    spec:
+      containers:
+        - name: securitydbcntr
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: security-mysql-secret
+                  key: mysql-password
+            - name: MYSQL_DATABASE
+              value: security_db
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: security-mysql-secret
+                  key: mysql-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: securitydbcntr
+spec:
+  selector:
+    app: securitydbcntr
+  ports:
+    - port: 3306
