@@ -22,9 +22,9 @@ spec:
     spec:
       containers:
         - name: security-app
-          image: omar99awaisha/security-service:v1.0
+          image: omar99awaisha/security-service:v1.1
           ports:
-            - containerPort: 8080
+            - containerPort: 8083
           env:
             # Direct database URL override
             - name: SPRING_DATASOURCE_URL
@@ -42,6 +42,9 @@ spec:
                   key: mysql-password
             - name: DB_NAME
               value: security_db
+            # Server port configuration
+            - name: SERVER_PORT
+              value: "8083"
             # JWT Configuration
             - name: JWT_SECRET
               valueFrom:
@@ -72,6 +75,6 @@ spec:
   selector:
     app: security-app
   ports:
-    - port: 8080
-      targetPort: 8080
-      nodePort: 30083
+    - port: 8083
+      targetPort: 8083
+      nodePort: 30084
