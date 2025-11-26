@@ -20,7 +20,7 @@ public class UserClientService {
     private final String userServiceUrl;
 
     public UserClientService(RestTemplate restTemplate, 
-                            @Value("${user.service.url:http://localhost:8081}") String userServiceUrl) {
+                            @Value("${user.service.url:http://localhost:8084}") String userServiceUrl) {
         this.restTemplate = restTemplate;
         this.userServiceUrl = userServiceUrl;
     }
