@@ -39,6 +39,22 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/search/username")
+    @Operation(summary = "Get user by username", description = "Returns a user by username")
+    public ResponseEntity<UserDto> getUserByUsername(
+            @Parameter(description = "Username") @RequestParam String username) {
+        UserDto user = userService.getUserByUsername(username);
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/search/email")
+    @Operation(summary = "Get user by email", description = "Returns a user by email")
+    public ResponseEntity<UserDto> getUserByEmail(
+            @Parameter(description = "Email") @RequestParam String email) {
+        UserDto user = userService.getUserByEmail(email);
+        return ResponseEntity.ok(user);
+    }
+
     @PostMapping
     @Operation(summary = "Create a new user", description = "Creates a new user and returns the created user")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest request) {
