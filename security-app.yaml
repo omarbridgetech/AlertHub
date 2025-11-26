@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: security-app
-          image: omar99awaisha/security-service:v1.4
+          image: omar99awaisha/security-service:v1.5
           ports:
             - containerPort: 8083
           env:
