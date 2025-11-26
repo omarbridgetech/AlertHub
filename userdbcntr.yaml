@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: user-mysql-secret
+type: Opaque
+data:
+  mysql-password: MTIzNA==  # base64 encoded "1234"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userdbcntr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userdbcntr
+  template:
+    metadata:
+      labels:
+        app: userdbcntr
+    spec:
+      containers:
+        - name: userdbcntr
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-mysql-secret
+                  key: mysql-password
+            - name: MYSQL_DATABASE
+              value: mst_user_db
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-mysql-secret
+                  key: mysql-password
+          volumeMounts:
+            - name: mysql-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-storage
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userdbcntr
+spec:
+  selector:
+    app: userdbcntr
+  ports:
+    - port: 3306
+      targetPort: 3306
+  type: ClusterIP
