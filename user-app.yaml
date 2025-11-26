@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
         - name: user-app
-          image: omar99awaisha/user-service:v1.1
+          image: omar99awaisha/user-service:v1.2
           ports:
-            - containerPort: 8081
+            - containerPort: 8084
           env:
             - name: DB_HOST
               value: userdbcntr
